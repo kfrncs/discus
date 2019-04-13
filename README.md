@@ -1,2 +1,2 @@
-# discogs_scraper
+# discus
 Persistently scrape Discogs info on Raspberry Pi
