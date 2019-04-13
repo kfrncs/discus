@@ -130,3 +130,5 @@ dmypy.json
 
 data/
 discogs_token.py
+proto_scripts.py
+my_token.py

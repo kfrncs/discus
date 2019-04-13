@@ -40,13 +40,13 @@ def ratings_by_release(df):
             time.sleep(60)
             # fetch JSON for each release ID
             json_raw = requests.get(f"https://api.discogs.com/releases/{df.release_id[i]}/rating",
-                               params={'token': 'ovZnEqFNotnIPnpqwWYkcbwOqOTberpelOQmrZAt'})
+                               params={'token': ''})
              # dig into the returned JSON object for the rating, append it to our list
             ratings_list.append(json_raw.json()['rating']['average'])
         else:
             # same as above, but no waiting
             json_raw = requests.get(f"https://api.discogs.com/releases/{df.release_id[i]}/rating",
-                               params={'token': 'ovZnEqFNotnIPnpqwWYkcbwOqOTberpelOQmrZAt'})
+                               params={'token': ''})
             ratings_list.append(json_raw.json()['rating']['average'])
     return ratings_list
 
@@ -72,13 +72,13 @@ def price_by_release(df):
             time.sleep(60)
             # fetch JSON for each release ID
             json_raw = requests.get(f"https://api.discogs.com/marketplace/price_suggestions/{df.release_id[i]}",
-                               params={'token': 'ovZnEqFNotnIPnpqwWYkcbwOqOTberpelOQmrZAt'})
+                               params={'token': ''})
              # dig into the returned JSON object for the rating, append it to our list
             json_list.append(json_raw.json())
         else:
             # same as above, but no waiting
             json_raw = requests.get(f"https://api.discogs.com/marketplace/price_suggestions/{df.release_id[i]}",
-                               params={'token': 'ovZnEqFNotnIPnpqwWYkcbwOqOTberpelOQmrZAt'})
+                               params={'token': ''})
             json_list.append(json_raw.json())
     return json_list
 
