@@ -11,6 +11,18 @@ import requests
 mine = pd.read_csv(my_collection)
 want = pd.read_csv(my_wantlist)
 
+# discogs API URL
+d_api = 'https://api.discogs.com/releases'
+
+# TODO: COLUMNS I WANT
+# mine:
+#   is_master (bool), 
+#   master_price, (if i don't already have the master release)
+#   community rating (only once),
+# wantlist:
+#   price_over_time
+
+
 class fetcher:
     '''
     Class to fetch the info from df by release_id column, 
@@ -23,33 +35,33 @@ class fetcher:
         '''
         self.fetched_list = []
         self.df = df
-    
 
-    def fetch_json(self, i):
-        # json_raw = requests.get(f"https://api.discogs.com/releases/{df.release_id[i]}/{discogs_field}",
-        #                         params={'token': my_token})
-        # self.fetched_list.append(json_raw.json())
+
+    def fetch_json(self, i, discogs_field):
+        json_raw = requests.get(f"{d_api}/{self.df.release_id[i]}/{discogs_field}",
+                                params={'token': my_token})
+        self.fetched_list.append(json_raw.json())
         pass
    
 
-    def tick(self):
+    def find(self, discogs_field):
         for i in range(len(self.df['release_id'])):
             if (i % 59 == 0 and i != 0):
-                # self.fetch_json(i)
+                self.fetch_json(i, discogs_field)
                 print(f'looking at: {self.df.iloc[i]["Title"]} by {self.df.iloc[i]["Artist"]}')
                 for second in range(1,60):
                     time.sleep(1)
                     print(f'sleeping {second}')
                     pass
             else:
-                # self.fetch_json(i)
+                self.fetch_json(i, discogs_field)
                 print(f'looking at: {self.df.iloc[i]["Title"]} by {self.df.iloc[i]["Artist"]}')
         pass
 
 ########## just to test the class
-# myfetch = fetcher(my_collection)
-# wantfetch = fetcher(my_wantlist)
-# myfetch.tick()
+myfetch = fetcher(mine)
+# wantfetch = fetcher(want)
+myfetch.find('rating')
 
 
 ##### OLD STUFF DOWN HERE
