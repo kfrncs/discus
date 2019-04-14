@@ -1,19 +1,26 @@
+# If you're erroring out on this, read my_token.py
 from data.my_token import my_token, my_collection, my_wantlist
 
+# imports for data science and API requests
 import numpy as np
 import pandas as pd
 import time
 import requests
 
-
+# grab collections as indicated by my_token.py 
 mine = pd.read_csv(my_collection)
 want = pd.read_csv(my_wantlist)
-mine.head()
 
 class fetcher:
-    '''fetch the info from df by release_id column, passing discogs_field into the request'''
-    
+    '''
+    Class to fetch the info from df by release_id column, 
+    passing discogs_field into the request
+    '''
     def __init__(self, df):
+        '''
+        Take the DataFrame passed on instantiation and store in self.df
+        self.fetched_list is used to store values before adding to DataFrame
+        '''
         self.fetched_list = []
         self.df = df
     
@@ -22,26 +29,27 @@ class fetcher:
         # json_raw = requests.get(f"https://api.discogs.com/releases/{df.release_id[i]}/{discogs_field}",
         #                         params={'token': my_token})
         # self.fetched_list.append(json_raw.json())
-        print(i)
         pass
    
 
     def tick(self):
-        # for i in range(len(self.df['release_id'])):
-        for i in range(1,300):
-            if (i % 59 == 0):
-                self.fetch_json(i)
-                for seconds in range(1,60):
-                    print(f'sleeping: {i}')
+        for i in range(len(self.df['release_id'])):
+            if (i % 59 == 0 and i != 0):
+                # self.fetch_json(i)
+                print(f'looking at: {self.df.iloc[i]["Title"]} by {self.df.iloc[i]["Artist"]}')
+                for second in range(1,60):
                     time.sleep(1)
+                    print(f'sleeping {second}')
+                    pass
             else:
-                self.fetch_json(i)
+                # self.fetch_json(i)
+                print(f'looking at: {self.df.iloc[i]["Title"]} by {self.df.iloc[i]["Artist"]}')
         pass
 
 ########## just to test the class
-#myfetch = fetcher(my_collection)
-#wantfetch = fetcher(my_wantlist)
-#myfetch.tick()
+# myfetch = fetcher(my_collection)
+# wantfetch = fetcher(my_wantlist)
+# myfetch.tick()
 
 
 ##### OLD STUFF DOWN HERE
