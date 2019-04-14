@@ -2,7 +2,7 @@
 # You can delete the access token later, but it's better safe than sorry.
 
 # FILL IT OUT AND DROP my_token.py INTO A FOLDER NAMED data. 
-# I've been using absolute paths, no promises that relative will work.\
+# I've been using absolute paths for the csv's, no promises that relative will work.\
 
 my_token = '<39AFKLSFN put your token here kfjJFSBASJBeq>'  # EDIT THIS to the access token from Discogs Developer Settings
 
