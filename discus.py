@@ -41,7 +41,7 @@ class fetcher:
         json_raw = requests.get(f"{d_api}/{self.df.release_id[i]}/{discogs_field}",
                                 params={'token': my_token})
         self.fetched_list.append(json_raw.json())
-        pass
+        return self
    
 
     def find(self, discogs_field):
@@ -52,11 +52,11 @@ class fetcher:
                 for second in range(1,60):
                     time.sleep(1)
                     print(f'sleeping {second}')
-                    pass
             else:
                 self.fetch_json(i, discogs_field)
                 print(f'looking at: {self.df.iloc[i]["Title"]} by {self.df.iloc[i]["Artist"]}')
-        pass
+        return self
+
 
 ########## just to test the class
 myfetch = fetcher(mine)
