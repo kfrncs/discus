@@ -53,6 +53,8 @@ class fetcher:
         Call requests.get, inheriting the counter i from self.find(), being passed discogs_field
         to determine data requested. Attach JSON data to self.fetched_list.
         '''
+        #TODO: turn fetched_list into fetched_dict and make it release_id : JSON object
+
         # Discogs API request for specified record and field.
         json_raw = requests.get(f"{d_api}/{discogs_field}/{self.df.release_id[i]}",
                                 params={'token': my_token})
@@ -69,6 +71,7 @@ class fetcher:
         '''
         # iterate through passed DataFrame's release_id column.
         for i in range(len(self.df['release_id'])):
+            # TODO: VERIFY THAT THIS LOOP IS NOT CAUSING AN OFF-BY-ONE UPON STITCHING
             if (i % 59 == 0 and i != 0):
                 # make the API call
                 self.fetch_json(i, discogs_field)
