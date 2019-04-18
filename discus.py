@@ -9,7 +9,7 @@ import requests
 
 # grab collections as indicated by my_token.py 
 mine = pd.read_csv(my_collection)
-want = pd.read_csv(my_wantlist)
+want = pd.read_csv(my_wantlist, index_col=False)
 
 # discogs API URL
 d_api = 'https://api.discogs.com/'
@@ -46,6 +46,7 @@ class fetcher:
         self.fetched_list is used to store values before adding to DataFrame
         '''
         self.fetched_list = []
+        self.ids = []
         self.df = df
 
     def fetch_json(self, i, discogs_field):
@@ -54,12 +55,19 @@ class fetcher:
         to determine data requested. Attach JSON data to self.fetched_list.
         '''
         #TODO: turn fetched_list into fetched_dict and make it release_id : JSON object
-
         # Discogs API request for specified record and field.
-        json_raw = requests.get(f"{d_api}/{discogs_field}/{self.df.release_id[i]}",
+        self.json_raw = requests.get(f"{d_api}/{discogs_field}/{self.df.release_id[i]}",
                                 params={'token': my_token})
-        # Append to attribute fetched_list
-        self.fetched_list.append(json_raw.json())
+        # Append to attribute fetched_list if it's not a message telling me I've sent
+        # too many requests. Or wait 10s and try again.
+        if "message" in self.json_raw.json().keys():
+            for second in range(1,30):
+                time.sleep(1)
+                print(f'sleeping bc discogs asked us to: {second}') 
+            self.fetch_json(i, discogs_field)
+        else:
+            self.fetched_list.append(self.json_raw.json())
+            self.ids.append(self.df.release_id[i])
         return self
 
     def find(self, discogs_field):
@@ -73,23 +81,31 @@ class fetcher:
         for i in range(len(self.df['release_id'])):
             # TODO: VERIFY THAT THIS LOOP IS NOT CAUSING AN OFF-BY-ONE UPON STITCHING
             if (i % 59 == 0 and i != 0):
-                # make the API call
-                self.fetch_json(i, discogs_field)
-                # keep track of where we are
-                print(f'requesting: {self.df.iloc[i]["Title"]} by {self.df.iloc[i]["Artist"]}')
                 # sleep
                 for second in range(1,60):
                     time.sleep(1)
-                    print(f'sleeping {second}')
+                    print(f'sleeping {second}') 
             else:
                 #API calls up to 59, no sleeping. print to keep track of progress.
                 self.fetch_json(i, discogs_field)
                 print(f'requesting: {self.df.iloc[i]["Title"]} by {self.df.iloc[i]["Artist"]}')
         return self
+    
+    def prep_data(self):
+        '''
+        Prepare newly fetched data for appending.
+            
+        >> will look something like this:
+        out_df = pd.io.json.json_normalize(self.fetched_list)
+        out_df['release_id'] = self.ids
+        out_df['date'] = pd.datetime.now().strftime("%Y-%m-%d")
+
+        '''
+        pass
 
     def stitch_price(self):
         '''
-        TODO
+        todo
         combines self.fetched_list with corresponding DataFrames 
         '''
         # old code:
@@ -101,4 +117,4 @@ class fetcher:
 ########## just to test the class
 myfetch = fetcher(mine)
 wantfetch = fetcher(want)
-myfetch.find('/marketplace/price_suggestions/')
+wantfetch.find('/marketplace/price_suggestions/')
