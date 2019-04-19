@@ -37,7 +37,7 @@ d_api = 'https://api.discogs.com/'
 class fetcher:
     '''
     Class to fetch the info from df by release_id column, 
-    passing discogs_field into the request.
+    passing discogs_field into the method call for fetch_json()
     '''
 
     def __init__(self, df):
@@ -53,11 +53,15 @@ class fetcher:
         '''
         Call requests.get, inheriting the counter i from self.find(), being passed discogs_field
         to determine data requested. Attach JSON data to self.fetched_list.
+        
+        TODO: turn fetched_list into fetched_dict and make it release_id : JSON object
+        Discogs API request for specified record and field.
         '''
-        #TODO: turn fetched_list into fetched_dict and make it release_id : JSON object
-        # Discogs API request for specified record and field.
+        
+        # make the request
         self.json_raw = requests.get(f"{d_api}/{discogs_field}/{self.df.release_id[i]}",
                                 params={'token': my_token})
+
         # Append to attribute fetched_list if it's not a message telling me I've sent
         # too many requests. Or wait 10s and try again.
         if "message" in self.json_raw.json().keys():
@@ -68,6 +72,7 @@ class fetcher:
         else:
             self.fetched_list.append(self.json_raw.json())
             self.ids.append(self.df.release_id[i])
+        
         return self
 
     def find(self, discogs_field):
@@ -94,20 +99,25 @@ class fetcher:
     def prep_data(self):
         '''
         Prepare newly fetched data for appending.
-            
-        >> will look something like this:
-        out_df = pd.io.json.json_normalize(self.fetched_list)
-        out_df['release_id'] = self.ids
-        out_df['date'] = pd.datetime.now().strftime("%Y-%m-%d")
-
         '''
-        pass
+
+        self.fetched_data = pd.io.json.json_normalize(self.fetched_list)
+        
+        self.id_date = pd.DataFrame({
+            'release_id': self.ids,
+            'date': pd.datetime.now().strftime("%Y-%m-%d")
+                })
+        
+        self.out_df = pd.concat([self.id_date, self.fetched_data], axis=1)
+
+        return self
 
     def stitch_price(self):
         '''
         todo
         combines self.fetched_list with corresponding DataFrames 
         '''
+
         # old code:
         # self.ratings_list.append(json_raw.json()['rating']['average'])
         # which was then tacked onto the DataFrame from the collection/wantlist .csv
@@ -118,3 +128,9 @@ class fetcher:
 myfetch = fetcher(mine)
 wantfetch = fetcher(want)
 wantfetch.find('/marketplace/price_suggestions/')
+
+# wantfetch.out_df *should* now contain a DataFrame marked with today's prices.
+print('prepping data')
+wantfetch.prep_data()
+print('saving csv')
+wantfetch.out_df.to_csv('data/test_2019-04-19.csv')
