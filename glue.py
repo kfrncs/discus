@@ -26,7 +26,7 @@ df = df.rename(index=str, columns={
     'Fair (F).value': 'fair', 'Good (G).value': 'good', 'Good Plus (G+).value': 'good_plus',
     'Mint (M).value': 'mint', 'Near Mint (NM or M-).value': 'near_mint', 'Poor (P).value': 'poor',
     'Very Good (VG).value': 'vg', 'Very Good Plus (VG+).value': 'vg_plus', 'date': 'date',
-    'release_id': 'id'})
+    'release_id': 'release_id'})
 
 # reorder columns
-df = df[['date', 'id', 'poor','fair', 'good', 'good_plus', 'vg', 'vg_plus', 'near_mint',  'mint']]
+df = df[['date', 'release_id', 'poor','fair', 'good', 'good_plus', 'vg', 'vg_plus', 'near_mint',  'mint']]
