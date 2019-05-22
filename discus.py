@@ -124,12 +124,12 @@ class fetcher:
         return self
 
 
-########## just to test the class
+########## fetch from discogs
 myfetch = fetcher(mine)
 wantfetch = fetcher(want)
 wantfetch.find('/marketplace/price_suggestions/')
 
-# wantfetch.out_df *should* now contain a DataFrame marked with today's prices.
+# wantfetch.out_df should now contain a DataFrame marked with today's prices.
 print('prepping data')
 wantfetch.prep_data()
 print('saving csv')
