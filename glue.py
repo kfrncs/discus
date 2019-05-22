@@ -21,4 +21,11 @@ df = df.drop(columns=['Unnamed: 0'])
 cols = [c for c in df.columns if c.endswith('currency') != True]
 df = df[cols]
 
+# rename columns
+df = df.rename(index=str, columns={
+    'Fair (F).value': 'fair', 'Good (G).value': 'good', 'Good Plus (G+).value': 'good_plus',
+    'Mint (M).value': 'mint', 'Near Mint (NM or M-).value': 'near_mint', 'Poor (P).value': 'poor',
+    'Very Good (VG).value': 'vg', 'Very Good Plus (VG+).value': 'vg_plus', 'date': 'date',
+    'release_id': 'id'})
+
 
