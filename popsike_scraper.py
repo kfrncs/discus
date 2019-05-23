@@ -11,7 +11,7 @@ release =  [ 'miles', 'davis', 'sketches', 'of', 'spain' ]
 payload = {
             'url': 'https://www.popsike.com/php/quicksearch.php?',
             # here be pseudocode
-            'searchtext': {'+'.join([word.lower() for word in release])},
+            'searchtext': '+'.join([word.lower() for word in release]),
             # ^^^^ PSEUDOCODE FIX ME ^^^^
             'currsel': str(2), # select currency 2 --> canadian dollars
             'endfrom': None, # start year --> endfrom
@@ -19,7 +19,10 @@ payload = {
         }
 
 years = list(range(2003,2020))
-for i in range(len(years)):
-    print(years[i])
-
+for year in years:
+    # set the year to t
+    payload['years'] = year
+    print(f"fetching {payload['years']}")
+    page = f"{payload['url']}&searchtext={payload['searchtext']}&currsel={payload['currsel']}&endfrom={year}&endthru={year}"
+    print(page)
 
