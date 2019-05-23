@@ -39,6 +39,7 @@ browser.find_element_by_name("Submit").click()
 
 test_list = []
 
+# SET THIS BACK TO THIS BEFORE USE
 # years = list(range(2003,2020))
 years = [2003]
 for year in years:
@@ -56,4 +57,17 @@ for year in years:
     test_list.append(min_price.text)
     test_list.append(max_price.text)
 
+def search_query(title, artist):
+    return title.lower().split(' ') + album.lower().split(' ')
+
 print(test_list)
+
+def popsike_scrape(df):
+    """ takes a dataframe built from wantlist csv. returns df with columns:
+        [ release_id, title, artist, year, avg_price, min_price, max_price ]
+    """
+    data = []
+    for i in range(len(df['release_id'])):
+        search_query(self.df.iloc[i]["Title"], df.iloc[i]["Artist"])
+    return pd.DataFrame.from_records(data)
+
