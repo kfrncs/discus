@@ -15,8 +15,7 @@ import os
 from dotenv import load_dotenv, find_dotenv
 load_dotenv(find_dotenv())
 
-# load Popsike password from .env
-POPS_PASSWORD = os.environ['POPS_PASSWORD']   
+from data.my_token import popsike_user, popsike_password
 
 release =  [ 'miles', 'davis', 'sketches', 'of', 'spain' ]
 
@@ -30,6 +29,18 @@ payload = {
             'endthru': None # end year ---> endthru (lol)
         }
 
+login_url = 'https://www.popsike.com/classes/access_user/login.php'
+browser.get(login_url)
+
+username = browser.find_element_by_id("sender-email")
+username.clear()
+username.send_keys(popsike_user)
+
+password = browser.find_element_by_id("user-pass")
+password.clear()
+password.send_keys(popsike_password)
+
+browser.find_element_by_name("Submit").click()
 
 years = list(range(2003,2020))
 for year in years:
