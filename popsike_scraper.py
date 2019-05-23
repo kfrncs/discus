@@ -1,22 +1,25 @@
-"""
-searchtext=miles+davis+bitches+brew
-&currsel=2 # select currency 2
-&endfrom=2005 # start year
-&endthru=2005 # end year
-"""
-year = 2003
+# TODO todo
+# put a for_loop in here that works through all the years
+# checks if the buttons exist to get min max avg from
+# and then saves them against the release_id for each year
 
-# RSS SEARCH MARKETPLACE:
-# https://www.discogs.com/sell/release/4922985?output=rss
+# grab the selenium stuff from bbc scraper
+# grab the print() statements from discus.py to format search terms
+
 release =  [ 'miles', 'davis', 'sketches', 'of', 'spain' ]
+
 payload = {
             'url': 'https://www.popsike.com/php/quicksearch.php?',
             # here be pseudocode
-            'searchtext': {'+'.join(release.to_lower())},
+            'searchtext': {'+'.join([word.lower() for word in release])},
             # ^^^^ PSEUDOCODE FIX ME ^^^^
-            'currsel': str(2). # select currency 2 --> canadian dollars
-            'endfrom': year, # start year --> endfrom
-            'endthru': year # end year ---> endthru (lol)
+            'currsel': str(2), # select currency 2 --> canadian dollars
+            'endfrom': None, # start year --> endfrom
+            'endthru': None # end year ---> endthru (lol)
         }
+
+years = list(range(2003,2020))
+for i in range(len(years)):
+    print(years[i])
 
 

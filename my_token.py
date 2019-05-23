@@ -8,4 +8,4 @@ my_token = '<39AFKLSFN put your token here kfjJFSBASJBeq>'  # EDIT THIS to the a
 
 my_collection = '/home/user/discus/data/my_collection_downloaded_from_discogs.csv' # EDIT THIS to the name of your collection.csv, 
                                                                                    # which you put in the data/ folder.
-my_wantlist = '/home/user/discus/data/my_wantlist_downloaded_from_discogs.csv'     # Same here, but for wantlist.csv 
+my_wantlist = '/home/user/discus/data/my_wantlist_csv_from_discogs.csv'     # Same here, but for wantlist.csv

@@ -91,7 +91,7 @@ class fetcher:
                 self.fetch_json(i, discogs_field)
                 print(f'requesting: {self.df.iloc[i]["Title"]} by {self.df.iloc[i]["Artist"]}')
         return self
-    
+
     def prep_data(self):
         '''
         Prepare newly fetched data for appending.
