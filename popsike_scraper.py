@@ -12,18 +12,13 @@ from selenium import webdriver
 browser = webdriver.Firefox()
 import os
 
-from dotenv import load_dotenv, find_dotenv
-load_dotenv(find_dotenv())
-
 from data.my_token import popsike_user, popsike_password
 
 release =  [ 'miles', 'davis', 'sketches', 'of', 'spain' ]
 
 payload = {
             'url': 'https://www.popsike.com/php/quicksearch.php?',
-            # here be pseudocode
             'searchtext': '+'.join([word.lower() for word in release]),
-            # ^^^^ PSEUDOCODE FIX ME ^^^^
             'currsel': str(2), # select currency 2 --> canadian dollars
             'endfrom': None, # start year --> endfrom
             'endthru': None # end year ---> endthru (lol)
@@ -42,7 +37,10 @@ password.send_keys(popsike_password)
 
 browser.find_element_by_name("Submit").click()
 
-years = list(range(2003,2020))
+test_list = []
+
+# years = list(range(2003,2020))
+years = [2003]
 for year in years:
     # set the year to t
     payload['years'] = year
@@ -51,6 +49,11 @@ for year in years:
     print(f'fetching {page}')
     browser.get(page)
     # href = browser.find_element_by_xpath(f'/html/body/section/div/div/div[3]/table/tbody/tr[{i}]/td[5]/a')
+    avg_price = browser.find_element_by_xpath('/html/body/div[2]/div[3]/div/div/div[2]/div/div[1]/ul/li[3]/a/div/button[1]')
+    min_price = browser.find_element_by_xpath('/html/body/div[2]/div[3]/div/div/div[2]/div/div[1]/ul/li[3]/a/div/button[2]')
+    max_price = browser.find_element_by_xpath('/html/body/div[2]/div[3]/div/div/div[2]/div/div[1]/ul/li[3]/a/div/button[3]')
+    test_list.append(avg_price.text)
+    test_list.append(min_price.text)
+    test_list.append(max_price.text)
 
-
-
+print(test_list)
