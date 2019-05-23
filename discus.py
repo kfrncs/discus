@@ -14,23 +14,19 @@ want = pd.read_csv(my_wantlist, index_col=False)
 # discogs API URL
 d_api = 'https://api.discogs.com/'
 
-####### TODO:
+####### TODO todo:
 # 
-# autobackups
-#
-# mine:
-#   check if it is_master (master, or "best" release, bool), 
-#   master_price, (if i don't already have the master release)
-#   maybe create my own metadata column to input whether I want a dupe/upgrade?
-#
 # wantlist:
-#   price_over_time
 #   my_rating (then I can use the stars in discogs to rank 1-5 how badly I want each record)
+#       ->> TODO: bring this in, my_rating
 #
 # marketplace:
-#   keep looking for stuff from wantlist or "dupe"list
 #   check sellers' inventory for other items from wantlist
-#   compare to historical prices
+# RSS SEARCH MARKETPLACE:
+# https://www.discogs.com/sell/release/4922985?output=rss
+#
+# ML:
+#   compare to historical prices, decide whether it's a good price or not. 
 #
 #######
 

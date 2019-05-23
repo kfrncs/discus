@@ -30,3 +30,5 @@ df = df.rename(index=str, columns={
 
 # reorder columns
 df = df[['date', 'release_id', 'poor','fair', 'good', 'good_plus', 'vg', 'vg_plus', 'near_mint',  'mint']]
+
+
