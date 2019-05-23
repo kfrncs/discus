@@ -6,6 +6,18 @@
 # grab the selenium stuff from bbc scraper
 # grab the print() statements from discus.py to format search terms
 
+# get dotenv file going
+
+from selenium import webdriver
+browser = webdriver.Firefox()
+import os
+
+from dotenv import load_dotenv, find_dotenv
+load_dotenv(find_dotenv())
+
+# load Popsike password from .env
+POPS_PASSWORD = os.environ['POPS_PASSWORD']   
+
 release =  [ 'miles', 'davis', 'sketches', 'of', 'spain' ]
 
 payload = {
@@ -18,11 +30,16 @@ payload = {
             'endthru': None # end year ---> endthru (lol)
         }
 
+
 years = list(range(2003,2020))
 for year in years:
     # set the year to t
     payload['years'] = year
     print(f"fetching {payload['years']}")
     page = f"{payload['url']}&searchtext={payload['searchtext']}&currsel={payload['currsel']}&endfrom={year}&endthru={year}"
-    print(page)
+    print(f'fetching {page}')
+    browser.get(page)
+    # href = browser.find_element_by_xpath(f'/html/body/section/div/div/div[3]/table/tbody/tr[{i}]/td[5]/a')
+
+
 
