@@ -86,7 +86,14 @@ def popsike_scrape(df):
     return out_df
 
 def search_query(title, artist):
-    return '+'.join(title.lower().split(' ') + artist.lower().split(' '))
+    # scrub out pluses from the title
+    title = title.replace('+','').replace('.','').replace('&','')
+    artist = artist.replace('+','').replace('.','').replace('&','')
+    # make lowercase, split by +'s, remove some punctuation
+    out_query = '+'.join(title.lower().split(' ') + artist.lower().split(' ')).replace('/','').replace('(', '').replace(')','')
+    print(f'out_query: {out_query}')
+
+    return out_query
 
 if __name__ == '__main__':
     df = popsike_scrape(want_df)
