@@ -42,5 +42,5 @@ df_popsike = df_popsike[['release_id', 'year', 'title', 'artist', 'min', 'avg', 
 
 # and get rid of the leading "min", "avg", "max"
 df_popsike['min'] = df_popsike['min'].apply(lambda x: x.lstrip('min '))
-df_popsike['avg'] = df_popsike['min'].apply(lambda x: x.lstrip('avg '))
-df_popsike['max'] = df_popsike['min'].apply(lambda x: x.lstrip('max '))
+df_popsike['avg'] = df_popsike['avg'].apply(lambda x: x.lstrip('avg '))
+df_popsike['max'] = df_popsike['max'].apply(lambda x: x.lstrip('max '))
