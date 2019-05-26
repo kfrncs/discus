@@ -12,7 +12,7 @@ for i in range(len(csv_list)):
 
 # turn list into one DataFrame
 df_discogs = pd.DataFrame()
-df_discogs = pd.concat(df_list) 
+df_discogs = pd.concat(df_list, sort=False) 
 
 # make "date" column into datetime
 df_discogs['date'] = pd.to_datetime(df_discogs['date'])
@@ -37,4 +37,10 @@ df_discogs = df_discogs[['date', 'release_id', 'poor','fair', 'good', 'good_plus
 list_popsike = load('data/popsike/release_list_may_24.joblib')
 df_popsike = pd.DataFrame(list_popsike, columns=['release_id', 'year', 'title', 'artist', 'avg', 'min', 'max'])
 
+# reorder columns on df_popsike
+df_popsike = df_popsike[['release_id', 'year', 'title', 'artist', 'min', 'avg', 'max']]
 
+# and get rid of the leading "min", "avg", "max"
+df_popsike['min'] = df_popsike['min'].apply(lambda x: x.lstrip('min '))
+df_popsike['avg'] = df_popsike['min'].apply(lambda x: x.lstrip('avg '))
+df_popsike['max'] = df_popsike['min'].apply(lambda x: x.lstrip('max '))
