@@ -18,7 +18,7 @@ def index():
         chosen_release = int(request.form['release_dropdown'])
         df_current = df_popsike[df_popsike['release_id'] == chosen_release].copy()
         base = alt.Chart(df_current.reset_index(), width=650).encode(x='year(year):O').properties(
-            title= 'test title' #df_current['title'].iloc[0] + ' - ' +  df_current['artist'].iloc[0]
+            title= df_current['title'].iloc[0] + ' - ' +  df_current['artist'].iloc[0]
         )
 
         alt.layer(
