@@ -15,15 +15,21 @@
       <br>
       <!-- https://stackoverflow.com/a/19794878/3731467 -->
       <form method="POST" action="/">
-        <input type="submit" class="btn btn-outline-primary btn-lg" name="player_throw" value="🗿">
+        <input type="submit" class="btn btn-outline-primary btn-lg" name="player_throw" value="Fetch record">
       </form>
     </div>
 
     {% if stored_number %}
     <br>
+    <select name=release method="GET" action="/">
+        <option value ="{{ releases[0] }}">{{ releases[0] }}</option>
+        {% for release in releases[1:] %}
+        <option value= "{{ release }}">{{ release }}</option>"
+        {% endfor %}
+
     <div class="container-fluid">
-        <p>you chose: {{ stored_number }}</p>
-      <br>
+        <p>you chose: {{ release }}</p>
+    <br>
     </div>
     {% endif %}
 
