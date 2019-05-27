@@ -16,24 +16,22 @@
       <!-- https://stackoverflow.com/a/19794878/3731467 -->
       <form method="POST" action="/">
         <input type="submit" class="btn btn-outline-primary btn-lg" name="player_throw" value="Fetch record">
+        <select name=release_dropdown method="GET" action="/">
+            {% for release in releases %}
+            <option value= "{{ release }}">
+                {{ df_popsike[df_popsike['release_id'] == release]['title'].iloc[0] }} - 
+                {{ df_popsike[df_popsike['release_id'] == release]['artist'].iloc[0] }}
+            </option>"
+            {% endfor %}
       </form>
     </div>
 
-    {% if stored_number %}
     <br>
-    <select name=release method="GET" action="/">
-        {% for release in releases %}
-        <option value= "{{ release }}">
-            {{ df_popsike[df_popsike['release_id'] == release]['title'].iloc[0] }} - 
-            {{ df_popsike[df_popsike['release_id'] == release]['artist'].iloc[0] }}
-        </option>"
-        {% endfor %}
 
     <div class="container-fluid">
         <p>you chose: {{ release }}</p>
     <br>
     </div>
-    {% endif %}
 
   </body>
 </html>
