@@ -22,9 +22,11 @@
     {% if stored_number %}
     <br>
     <select name=release method="GET" action="/">
-        <option value ="{{ releases[0] }}">{{ releases[0] }}</option>
-        {% for release in releases[1:] %}
-        <option value= "{{ release }}">{{ release }}</option>"
+        {% for release in releases %}
+        <option value= "{{ release }}">
+            {{ df_popsike[df_popsike['release_id'] == release]['title'].iloc[0] }} - 
+            {{ df_popsike[df_popsike['release_id'] == release]['artist'].iloc[0] }}
+        </option>"
         {% endfor %}
 
     <div class="container-fluid">

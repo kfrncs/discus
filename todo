@@ -1,0 +1,26 @@
+#### EDA/munging: 
+- Match up popsike's min/avg/max with discogs' quality ratings.
+    - is there a statistically valid way to do this?
+    - prob just ditch the discogs data and use popsike
+
+#### MARKETPLACE & comparison:
+- write script to pull marketplace data
+    - convert currencies
+- compare min/avg/max to metrics from marketplace
+- visualize the available listings in the marketplace??
+
+#### ML Model:
+- prophet?
+- iterate through all data and put preds on the end of the dataframe
+
+#### Flask
+- select record from dropdown list
+- view available listings
+- visualize price over time & prophet predictions
+- % certainty that this is a good purchase ?
+
+#### Extra features:
+- make scrapers save a list of what *didn't* get scraped
+- make popsike scraper check only for non-existing data
+- make both scrapers remove data that was removed from the wantlist (i.e purchased)
+

@@ -1,3 +1,4 @@
+#!/usr/bin/python
 import pandas as pd
 import os 
 from joblib import load
@@ -37,10 +38,16 @@ df_discogs = df_discogs[['date', 'release_id', 'poor','fair', 'good', 'good_plus
 list_popsike = load('data/popsike/release_list_may_24.joblib')
 df_popsike = pd.DataFrame(list_popsike, columns=['release_id', 'year', 'title', 'artist', 'avg', 'min', 'max'])
 
-# reorder columns on df_popsike
+# reorder columns on df_popsike, make 'year' datetime
 df_popsike = df_popsike[['release_id', 'year', 'title', 'artist', 'min', 'avg', 'max']]
+df_popsike['year'] = pd.to_datetime(df_popsike['year'], format="%Y")
 
 # and get rid of the leading "min", "avg", "max"
 df_popsike['min'] = df_popsike['min'].apply(lambda x: x.lstrip('min '))
 df_popsike['avg'] = df_popsike['avg'].apply(lambda x: x.lstrip('avg '))
 df_popsike['max'] = df_popsike['max'].apply(lambda x: x.lstrip('max '))
+
+# make "min", "avg", "max" into ints
+df_popsike['min'] = df_popsike['min'].astype(int)
+df_popsike['avg'] = df_popsike['avg'].astype(int)
+df_popsike['max'] = df_popsike['max'].astype(int)
