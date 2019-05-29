@@ -5,13 +5,13 @@
 
 #### Flask page output
 - list of current marketplace releases (link to buy), prices (both currencies), comments
-- % certainty that this is a good purchase ?
 - local peaks?
 - current discogs suggestion for this page
 
 #### ML Model:
 - prophet
     - add to altair charts! dotted.
+    - integrate from ipynb to prophet.py/app.py
 - local peaks?
 
 #### Extra features:
@@ -24,3 +24,7 @@
 
 #### Bug Fixes:
 - why do i have to stop loading every time? flask
+
+#### ASK MAX
+- local peaks? easiest way?
+

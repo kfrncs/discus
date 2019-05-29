@@ -20,7 +20,7 @@ def index():
     if request.method == 'POST':
         chosen_release = int(request.form['release_dropdown'])
         df_current = df_popsike[df_popsike['release_id'] == chosen_release].copy()
-        
+
         ### prophet
         # df_future = prophesy(df_current)
 
@@ -37,6 +37,8 @@ def index():
                 height=450).encode(x='year(year):O').properties(
             title= df_current['title'].iloc[0] + ' - ' +  df_current['artist'].iloc[0]
         )
+
+        # this is where prophet predictions will go, looking like ^^^
 
         alt.layer(
                 base.mark_line(color='red').encode(y='min:Q', tooltip='min:Q'),
