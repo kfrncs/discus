@@ -17,6 +17,12 @@ def index():
     if request.method == 'POST':
         chosen_release = int(request.form['release_dropdown'])
         df_current = df_popsike[df_popsike['release_id'] == chosen_release].copy()
+ 
+        # later desired behaviour (see chart.py)
+        # make_chart(df_current)
+
+        '''
+        # old behaviour
         base = alt.Chart(df_current.reset_index(), width=1150).encode(x='year(year):O').properties(
             title= df_current['title'].iloc[0] + ' - ' +  df_current['artist'].iloc[0]
         )
@@ -26,6 +32,7 @@ def index():
                 base.mark_line(color='blue').encode(y='avg:Q', tooltip='avg:Q'),
                 base.mark_line(color='green').encode(y='max:Q', tooltip='max:Q')
         ).interactive().serve()
+        '''
 
     return render_template('index.html', releases=releases, df_popsike=df_popsike, chosen_release=chosen_release) 
 
