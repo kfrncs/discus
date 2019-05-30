@@ -42,7 +42,7 @@ def index():
 
         # make chart (TODO: refactor behaviour to fit chart.py)
         base = alt.Chart(df_current.reset_index(),
-                width=1150,
+                width=900,
                 height=450).encode(x='year(year):O').properties(
             title= df_current['title'].iloc[0] + ' - ' +  df_current['artist'].iloc[0]
         )
