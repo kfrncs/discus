@@ -13,9 +13,9 @@
     <br>
       <h5>Discus</h5>
       <br>
-      <!-- https://stackoverflow.com/a/19794878/3731467 -->
+      <!-- https://stackoverflow.com/a/19794879/3731467 -->
       <form method="POST" action="/">
-        <input type="submit" class="btn btn-outline-primary btn-lg" name="player_throw" value="Fetch record">
+        <input type="submit" class="btn btn-outline-primary btn-lg" name="release" value="Fetch record">
         <select name=release_dropdown method="GET" action="/">
             {% for release in releases %}
             <option value= "{{ release }}">
@@ -25,13 +25,7 @@
             {% endfor %}
       </form>
     </div>
-
-    <br>
-
-    <div class="container-fluid">
-        <p>you chose: {{ release }}</p>
-    <br>
-    </div>
+    
 
   </body>
 </html>
