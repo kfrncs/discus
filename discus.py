@@ -119,14 +119,25 @@ class fetcher:
         # which was then tacked onto the DataFrame from the collection/wantlist .csv
         return self
 
+    def wait_til_tomorrow():
+        """Wait to tommorow 00:00 am"""
+        
+        print('starting waiting 24h')
+        tomorrow = datetime.datetime.replace(datetime.datetime.now() + datetime.timedelta(days=1), 
+                         hour=0, minute=0, second=0)
+        delta = tomorrow - datetime.datetime.now()
+        time.sleep(delta.seconds)
+        print('done waiting')
 
+while True:
 ########## fetch from discogs
-myfetch = fetcher(mine)
-wantfetch = fetcher(want)
-wantfetch.find('/marketplace/price_suggestions/')
+    myfetch = fetcher(mine)
+    wantfetch = fetcher(want)
+    wantfetch.find('/marketplace/price_suggestions/')
 
-# wantfetch.out_df should now contain a DataFrame marked with today's prices.
-print('prepping data')
-wantfetch.prep_data()
-print('saving csv')
-wantfetch.out_df.to_csv(f'data/pricefetch/wantlist_prices_{pd.datetime.now().strftime("%Y-%m-%d")}.csv', index=False)
+    # wantfetch.out_df should now contain a DataFrame marked with today's prices.
+    print('prepping data')
+    wantfetch.prep_data()
+    print('saving csv')
+    wantfetch.out_df.to_csv(f'data/pricefetch/wantlist_prices_{pd.datetime.now().strftime("%Y-%m-%d")}.csv', index=False)
+    wait_til_tomorrow()

@@ -23,8 +23,8 @@ def index():
         df_current = df_popsike[df_popsike['release_id'] == chosen_release].copy()
 
         ### prophet
-        # df_future = prophesy(df_current)
-
+        df_future = prophesy(df_current)
+        
 
 
         ### visualization
@@ -38,13 +38,16 @@ def index():
                 height=450).encode(x='year(year):O').properties(
             title= df_current['title'].iloc[0] + ' - ' +  df_current['artist'].iloc[0]
         )
-
-        # this is where prophet predictions will go, looking like ^^^
+        
+        future = alt.Chart(df_future.reset_index(), width=650).encode(x='year(year):O').properties()
 
         alt.layer(
                 base.mark_line(color='red').encode(y='min:Q', tooltip='min:Q'),
                 base.mark_line(color='blue').encode(y='avg:Q', tooltip='avg:Q'),
-                base.mark_line(color='green').encode(y='max:Q', tooltip='max:Q')
+                base.mark_line(color='green').encode(y='max:Q', tooltip='max:Q'),
+                future.mark_line(color='red').encode(y='min:Q'),
+                future.mark_line(color='blue').encode(y='avg:Q'),
+                future.mark_line(color='green').encode(y='max:Q')
         ).interactive().serve()
         # you'll need this for prophet viz:
         # mark_line(strokeDash=[1,1])
